@@ -27,3 +27,5 @@ Inspiration: [Prison Map](http://prisonmap.com/)
 - [ ] Data Validation
 - [ ] Error Messages
 - [ ] Example Page, Tutorial
+- [ ] Add gulp deploy task
+- [ ] Deploy somewhere
