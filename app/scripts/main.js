@@ -57,3 +57,5 @@ function validateCsvObj(csvObj) {
 
 $form.on('input change', updateForm);
 $form.on('submit', submitForm);
+
+updateForm();
