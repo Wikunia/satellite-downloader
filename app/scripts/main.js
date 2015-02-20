@@ -13,12 +13,13 @@ var $form = $('form#editor-form'),
     $zoom = $('input#zoom'),
     $height = $('input#height'),
     $width = $('input#width'),
-    $error = $('.error');
+    $error = $('.error'),
+    $example = $('.example');
 
 var data = {};
 
 function updateForm() {
-  data.title = $title.val();
+  data.title = $title.val() || 'Satellite_Images';
   data.csv = parseCsv($csv.val());
   data.type = $('input[name=maptype]:checked').val();
   data.zoom = $zoom.val();
@@ -36,7 +37,10 @@ function submitForm(evt) {
 
   var zip = new jsZip();
 
-  data.csv.forEach(function(d,i) {
+  var i = 0;
+
+  var interval = setInterval(function() {
+    var d = data.csv[i];
     var center = typeof d.search == 'undefined' ?  d.latitude + ',' + d.longitude : d.search;
     data.center = center;
     
@@ -44,11 +48,16 @@ function submitForm(evt) {
       base64 = base64.split(',')[1];
       zip.file(imgName + '.png', base64, {base64: true});
       if(i == data.csv.length-1) {
-        var content = zip.generate({type:"blob"});
-        fileSaver.saveAs(content, "example.zip");
+        var content = zip.generate({type: 'blob'});
+        fileSaver.saveAs(content, data.title + '.zip');
       }
-    }.bind(i, d.name))
-  });
+    }.bind(i, d.name));
+
+    if(i == data.csv.length - 1) {
+      clearInterval(interval);
+    }
+    i++;
+  }, 100);
 }
 
 function showCsvError() {
@@ -67,7 +76,18 @@ function validateCsvObj(c) {
   return !isEmpty && (('latitude' in c && 'longitude' in c) || 'search' in c);
 }
 
+function loadExample() {
+  $.ajax({
+    dataType: 'text',
+    url: 'data/example.csv'
+  }).done(function(data) {
+    console.log(data);
+    $csv.val(data.toString());
+  });
+}
+
 $form.on('input change', updateForm);
 $form.on('submit', submitForm);
+$example.on('click', loadExample);
 
 updateForm();

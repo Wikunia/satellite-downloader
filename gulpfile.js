@@ -38,6 +38,12 @@ gulp.task('html', function() {
     .pipe($.connect.reload());
 });
 
+// copy example from app to dist
+gulp.task('example', function() {
+  return gulp.src(app + 'example.csv')
+    .pipe(gulp.dest(dist + 'data/'));
+});
+
 gulp.task('styles',function(cb) {
 
   // convert stylus to css
@@ -89,5 +95,5 @@ gulp.task('default', ['build', 'serve', 'watch']);
 
 // waits until clean is finished then builds the project
 gulp.task('build', ['clean'], function(){
-  gulp.start(['images','html','scripts','styles']);
+  gulp.start(['images','html','scripts','styles', 'example']);
 });
