@@ -1,11 +1,11 @@
-var $ = require('jquery');
-var dsv = require('./dsv');
-var csvParser = dsv(',');
-var preview = require('./preview');
-var jsZip = require('jszip');
-var fileSaver = require('./fileSaver');
-var imageToBase64 = require('./image2base64');
-var api = require('./static-api');
+var $ = require('jquery'),
+    dsv = require('./dsv'),
+    csvParser = dsv(','),
+    preview = require('./preview'),
+    jsZip = require('jszip'),
+    fileSaver = require('./fileSaver'),
+    imageToBase64 = require('./image2base64'),
+    api = require('./static-api');
 
 var $form = $('form#editor-form'),
     $title = $('#title'),
@@ -38,7 +38,7 @@ function submitForm(evt) {
     
     imageToBase64(api.getImageUrl(data), function(imgName,base64) {
       base64 = base64.split(',')[1];
-      zip.file(imgName, base64, {base64: true});
+      zip.file(imgName + '.png', base64, {base64: true});
       if(i == data.csv.length-1) {
         var content = zip.generate({type:"blob"});
         fileSaver.saveAs(content, "example.zip");
