@@ -1,10 +1,10 @@
 {
-  "name": "starterkit-webapp",
+  "name": "satellite-downloader",
   "version": "0.0.1",
   "authors": [
-    "@moklick <mo@webkid.io>"
+    "@chrtze <chris@webkid.io>"
   ],
-  "description": "Lightweight starting point for a web app.",
+  "description": "A small tool for batch-downloading satellite images from csv data.",
   "main": "index.html",
   "license": "MIT",
   "ignore": [
