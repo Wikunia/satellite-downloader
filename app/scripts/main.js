@@ -12,7 +12,8 @@ var $form = $('form#editor-form'),
     $csv = $('#csv'),
     $zoom = $('input#zoom'),
     $height = $('input#height'),
-    $width = $('input#width');
+    $width = $('input#width'),
+    $error = $('.error');
 
 var data = {};
 
@@ -23,12 +24,15 @@ function updateForm() {
   data.zoom = $zoom.val();
   data.height = $height.val();
   data.width = $width.val();
-  data.center = 'Berlin';
+  data.center = typeof data.csv[0] !== 'undefined' ? data.csv[0].search || data.csv[0].latitude + ',' + data.csv[0].longitude : 'Berlin';
   preview.update(data);
 }
 
 function submitForm(evt) {
+  updateForm();
   evt.preventDefault();
+
+  if(!validateCsvObj(data.csv)) {showCsvError(); return false;}
 
   var zip = new jsZip();
 
@@ -47,12 +51,20 @@ function submitForm(evt) {
   });
 }
 
-function parseCsv(csv) {
-  return csvParser.parse(csv);
+function showCsvError() {
+  $error.fadeIn();
+  window.setTimeout(function() {$error.fadeOut()}, 2000);
 }
 
-function validateCsvObj(csvObj) {
-  return true;
+function parseCsv(csv) {
+  var csvObj = csvParser.parse(csv);
+  return csvObj;
+}
+
+function validateCsvObj(c) {
+  var isEmpty = c.length <= 0
+  c = c[0];
+  return !isEmpty && (('latitude' in c && 'longitude' in c) || 'search' in c);
 }
 
 $form.on('input change', updateForm);

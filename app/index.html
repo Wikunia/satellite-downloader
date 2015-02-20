@@ -26,6 +26,7 @@
 
     <div class="form-group">
       <label for="csv">Data</label>
+      <p>Paste csv data here. You can use these column names: name, latitude, longitude, search. Check out the example dataset containing 300 Airports.</p>
       <textarea id="csv" class="form-control" rows="15" placeholder="paste some data...">name,latitude,longitude,search
 Berlin,51.266667,6.266667
 Hamburg,49.166667,12.933333
@@ -63,6 +64,7 @@ New York,,,New York</textarea>
 
     <div class="form-group">
       <input type="submit" class="btn btn-success btn-lg" value="create"></input>
+      <span class="error">Please check your data!</span>
     </div>
 
     <div id="preview">
