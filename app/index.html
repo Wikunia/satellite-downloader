@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="A description.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+  <title>application</title>
+
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="editor">
+  
+  <h1>Satellite Downloader</h1>
+  <p>A small tool for batch-downloading satellite images from csv data.</p>
+
+  <form id="editor-form">
+    
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" placeholder="enter the title of your collection...">
+    </div>
+
+    <div class="form-group">
+      <label for="csv">Data</label>
+      <textarea id="csv" class="form-control" rows="15" placeholder="paste some data...">name,latitude,longitude,search
+Berlin,51.266667,6.266667
+Hamburg,49.166667,12.933333
+New York,,,New York</textarea>
+      <div>
+        <u class="show-example">Show Example</u>
+        <u class="validate">Validate</u>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div><strong>Maptype</strong></div>
+      <label class="radio-inline">
+      <input type="radio" name="maptype" checked value="satellite">Satellite
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="maptype" value="roadmap">Roadmap
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="maptype" value="terrain">Terrain
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="maptype" value="hybrid">Hybrid
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="title">Width</label>
+      <input type="number" class="form-control" id="width" value="400">
+      <label for="title">Height</label>
+      <input type="number" class="form-control" id="height" value="300">
+      <label for="title">Zoom</label>
+      <input type="number" class="form-control" id="zoom" value="12">
+    </div>
+
+    <div class="form-group">
+      <input type="submit" class="btn btn-success btn-lg" value="create"></input>
+    </div>
+
+    <div id="preview">
+      <h3>Preview</h3>
+    </div>
+  
+  </form>
+
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
