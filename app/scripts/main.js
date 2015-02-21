@@ -14,7 +14,8 @@ var $form = $('form#editor-form'),
     $height = $('input#height'),
     $width = $('input#width'),
     $error = $('.error'),
-    $example = $('.example');
+    $example = $('.example'),
+    $key = $('input#api-key');
 
 var data = {};
 
@@ -25,6 +26,7 @@ function updateForm() {
   data.zoom = $zoom.val();
   data.height = $height.val();
   data.width = $width.val();
+  data.key = $key.val();
   data.center = typeof data.csv[0] !== 'undefined' ? data.csv[0].search || data.csv[0].latitude + ',' + data.csv[0].longitude : 'Berlin';
   preview.update(data);
 }

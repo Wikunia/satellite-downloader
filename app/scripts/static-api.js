@@ -9,7 +9,8 @@ function getImageUrl(data) {
     size: data.width + 'x' + data.height,
     scale: 1,
     format: 'PNG',
-    maptype: data.type
+    maptype: data.type,
+    key: data.key
   }
 
   return api(configObj);
