@@ -26,7 +26,7 @@ Inspiration: [Prison Map](http://prisonmap.com/)
 #### Todos
 
 - [X] prototype
-- [ ] How can we download large datasets without exceeding the API limit? (I added a setTimeout(..., 100) for the moment.)
+- [ ] Limit number of pictures to download at a time (Because Google doesn't like that stuff...)
 - [ ] Progressbar (larger datasets take some time to generate)
 - [X] Add testdata (List of German Airports)
 - [ ] Data Validation
