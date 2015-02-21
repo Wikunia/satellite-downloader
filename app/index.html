@@ -11,7 +11,19 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+<div id="loading-overlay">
+  
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+      <span class="sr-only">60% Complete</span>
+    </div>
+  </div>
 
+  <div class="loading-msg">
+    <h4>Please wait while your images are being downloaded...</h4>
+    <button class="btn btn-danger">Cancel</button>
+  </div>
+</div>
 <div id="editor">
   
   <h1>Satellite Downloader</h1>

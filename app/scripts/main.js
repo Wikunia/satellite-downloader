@@ -15,9 +15,13 @@ var $form = $('form#editor-form'),
     $width = $('input#width'),
     $error = $('.error'),
     $example = $('.example'),
-    $key = $('input#api-key');
+    $key = $('input#api-key'),
+    $progress = $('div.progress-bar'),
+    $loadingOverlay = $('div#loading-overlay');
 
 var data = {};
+
+window.prog = $progress;
 
 function updateForm() {
   data.title = $title.val() || 'Satellite_Images';
@@ -37,29 +41,42 @@ function submitForm(evt) {
 
   if(!validateCsvObj(data.csv)) {showCsvError(); return false;}
 
-  var zip = new jsZip();
+  try {
+    $loadingOverlay.css('display', 'block');
 
-  var i = 0;
+    setProgress(0, data.csv.length);
 
-  var interval = setInterval(function() {
-    var d = data.csv[i];
-    var center = typeof d.search == 'undefined' ?  d.latitude + ',' + d.longitude : d.search;
-    data.center = center;
-    
-    imageToBase64(api.getImageUrl(data), function(imgName,base64) {
-      base64 = base64.split(',')[1];
-      zip.file(imgName + '.png', base64, {base64: true});
-      if(i == data.csv.length-1) {
-        var content = zip.generate({type: 'blob'});
-        fileSaver.saveAs(content, data.title + '.zip');
-      }
-    }.bind(i, d.name));
+    var zip = new jsZip();
 
-    if(i == data.csv.length - 1) {
-      clearInterval(interval);
-    }
-    i++;
-  }, 100);
+    var imgCount = 0;
+
+    data.csv.forEach(function(d,i) {
+      var center = typeof d.search == 'undefined' ?  d.latitude + ',' + d.longitude : d.search;
+      data.center = center;
+      
+      imageToBase64(api.getImageUrl(data), function(imgName,base64) {
+        base64 = base64.split(',')[1];
+        zip.file(imgName + '.png', base64, {base64: true});
+        if(i == data.csv.length-1) {
+          var content = zip.generate({type: 'blob'});
+          fileSaver.saveAs(content, data.title + '.zip');
+          $loadingOverlay.css('display', 'none');
+        }
+        imgCount++;
+        setProgress(imgCount, data.csv.length);
+      
+      }.bind(i, d.name));
+    });
+  }
+  catch(e) {
+    console.log('error');
+  }
+
+}
+
+function setProgress(val, max) {
+  var percent = ~~(val / (max / 100));
+  $progress.css('width', percent + '%');
 }
 
 function showCsvError() {

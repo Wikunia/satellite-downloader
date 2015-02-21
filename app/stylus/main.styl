@@ -16,3 +16,28 @@ div#editor
     cursor: pointer
     &:hover
       color: #f00
+
+div#loading-overlay
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background: rgba(255,255,255,.8)
+  z-index: 1000
+  display: none
+  div.progress
+    width: 100%
+    position: absolute
+    top: 0
+    left: 0
+    height: 10px
+    border-radius: 0
+  .loading-msg
+    text-align: center
+    position: absolute
+    margin: auto
+    top: 0
+    bottom: 0
+    width: 100%
+    transform: translateY(50%)
