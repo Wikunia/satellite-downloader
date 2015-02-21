@@ -1,6 +1,8 @@
 # Satellite Downloader
 
-!**Work in progress**!
+**Work in progress**
+
+![thumbnail](https://raw.githubusercontent.com/wbkd/satellite-downloader/master/thumbnail.png)
 
 
 A small tool for batch-downloading satellite images from csv data.
