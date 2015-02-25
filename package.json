@@ -26,6 +26,7 @@
   "dependencies": {
     "dsv": "0.0.4",
     "google-maps-image-api-url": "^1.0.0",
+    "hogan": "^1.0.2",
     "jquery": "^1.11.2",
     "jszip": "^2.4.0"
   }

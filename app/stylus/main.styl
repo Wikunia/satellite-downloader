@@ -1,6 +1,9 @@
 @import 'normalize'
 @import 'helper'
+@import 'embed'
 @import 'bootstrap.css'
+@import 'prism.css'
+
 
 div#editor
   width:100%
@@ -41,3 +44,11 @@ div#loading-overlay
     bottom: 0
     width: 100%
     transform: translateY(50%)
+
+
+.tab-content
+  display:none
+  
+  &.active
+    margin-top:25px
+    display:block

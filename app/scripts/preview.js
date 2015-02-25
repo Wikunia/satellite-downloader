@@ -14,7 +14,6 @@ function update(data) {
   $img.attr('src', url);
 }
 
-
 module.exports = {
   update : update
 }

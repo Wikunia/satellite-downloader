@@ -13,6 +13,10 @@ function getImageUrl(data) {
     key: data.key
   }
 
+  if(!configObj.key){
+    delete configObj.key;
+  }
+  
   return api(configObj);
 }
 
