@@ -32,7 +32,27 @@ function updateForm() {
   data.width = $width.val();
   data.key = $key.val();
   data.center = typeof data.csv[0] !== 'undefined' ? data.csv[0].search || data.csv[0].latitude + ',' + data.csv[0].longitude : 'Berlin';
-  preview.update(data);
+  // preview.update(data);
+}
+
+function downloadImagesRec(zip, data, imgCount) {
+  var d = data.csv[imgCount];
+  var center = typeof d.search == 'undefined' ?  d.latitude + ',' + d.longitude : d.search;
+  data.center = center;
+  imageToBase64(api.getImageUrl(data), function(imgName,base64) {
+    base64 = base64.split(',')[1];
+    zip.file(imgName + '.png', base64, {base64: true});
+    if(imgCount == data.csv.length-1) {
+      var content = zip.generate({type: 'blob'});
+      fileSaver.saveAs(content, data.title + '.zip');
+      $loadingOverlay.css('display', 'none');
+      return 
+    } else {
+      imgCount++;
+      setProgress(imgCount, data.csv.length);
+      downloadImagesRec(zip, data, imgCount);
+    }
+  }.bind(imgCount, d.name));
 }
 
 function submitForm(evt) {
@@ -48,30 +68,11 @@ function submitForm(evt) {
 
     var zip = new jsZip();
 
-    var imgCount = 0;
-
-    data.csv.forEach(function(d,i) {
-      var center = typeof d.search == 'undefined' ?  d.latitude + ',' + d.longitude : d.search;
-      data.center = center;
-      
-      imageToBase64(api.getImageUrl(data), function(imgName,base64) {
-        base64 = base64.split(',')[1];
-        zip.file(imgName + '.png', base64, {base64: true});
-        if(i == data.csv.length-1) {
-          var content = zip.generate({type: 'blob'});
-          fileSaver.saveAs(content, data.title + '.zip');
-          $loadingOverlay.css('display', 'none');
-        }
-        imgCount++;
-        setProgress(imgCount, data.csv.length);
-      
-      }.bind(i, d.name));
-    });
+    downloadImagesRec(zip, data, 0);
   }
   catch(e) {
     console.log('error');
   }
-
 }
 
 function setProgress(val, max) {
